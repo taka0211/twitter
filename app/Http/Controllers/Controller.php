@@ -15,25 +15,13 @@ abstract class Controller extends BaseController
         $count_microposts = $user->microposts()->count();
         $count_followings = $user->followings()->count();
         $count_followers = $user->followers()->count();
+        $count_favoritings =$user->favorites()->count();
 
         return [
             'count_microposts' => $count_microposts,
             'count_followings' => $count_followings,
             'count_followers' => $count_followers,
+            'count_favoritings' => $count_favoritings,
         ];
-    }
-     public function index()
-    {
-        $data = [];
-        if (\Auth::check()) {
-            $user = \Auth::user();
-            $microposts = $user->feed_microposts()->orderBy('created_at', 'desc')->paginate(10);
-
-            $data = [
-                'user' => $user,
-                'microposts' => $microposts,
-            ];
-        }
-        return view('welcome', $data);
     }
 }
